@@ -6,13 +6,13 @@ I have already make a benchmark on three Python web frameworks(Django/Flask/Fast
 
 ## Pre-Requirements
 
-I have already prepared some environments for this benchmark. All off those environments are supported by Azure(Thanks Microsoft). Here's the detail
+I have already prepared some environments for this benchmark. All of those environments are supported by Azure(Thanks Microsoft). Here's the detail
 
 ### Hardware
 
 1. a Kubernetes cluster with three nodes(each node gets four cores CPU and 16G RAM). Each server is deployed with three pods and each pod has been scheduled to a different node. There is no resource limit on server deployment.
 
-2. The Kubernetes Ingress Controller made by Nginx is used to be the load balancer. Every pod for the server gets the same weight.
+2. The Kubernetes Ingress Controller made by Nginx 1.7.10 is used to be the load balancer. Every pod for the server gets the same weight.
 
 3. MySQL service is used at the database. The version is 8.0 and the server gets 2 cores CPU and 8G RAM with a single node.
 
