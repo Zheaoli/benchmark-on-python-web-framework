@@ -1,0 +1,6 @@
+django
+greenify
+pymysql
+mysqlclient
+gevent
+gunicorn

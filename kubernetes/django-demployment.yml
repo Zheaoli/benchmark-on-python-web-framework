@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-django-code
+  namespace: meetup-code
+  labels:
+    type: my-django-code
+    app: my-django-code
+spec:
+  replicas: 3
+  selector: 
+    matchLabels:
+     blog: my-django-code
+  template:
+    metadata:
+      labels:
+        blog: my-django-code
+    spec:
+      containers:
+      - name: my-django-code
+        image: meetupdemo.azurecr.io/django_code:latest
+        ports:
+        - containerPort: 12345
+          name: my-django-port
+  
+-----------------------
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-django-code-ingress
+  namespace: meetup-code
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /demo/demo
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: my-django-code-service1
+          servicePort: 80
+        path: /django
+
+-----------------------
+kind: Service
+apiVersion: v1
+metadata:
+  name:  my-django-code-service
+  namespace: meetup-code
+spec:
+  selector:
+    blog: my-django-code
+  ports:
+  - port:  80
+    targetPort:  12345
