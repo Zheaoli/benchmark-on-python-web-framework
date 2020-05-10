@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-fastapi-code
+  namespace: meetup-code
+  labels:
+    type: my-fastapi-code
+    app: my-fastapi-code
+spec:
+  replicas: 3
+  selector: 
+    matchLabels:
+     blog: my-fastapi-code
+  template:
+    metadata:
+      labels:
+        blog: my-fastapi-code
+    spec:
+      containers:
+      - name: my-fastapi-code
+        image: meetupdemo.azurecr.io/fastapi_code:latest2
+        ports:
+        - containerPort: 12345
+          name: my-fastapi-port
+
+------------------
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-fastapi-code-ingress
+  namespace: meetup-code
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /demo
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: my-fastapi-code-service
+          servicePort: 80
+        path: /fastapi
+
+------------------
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  my-fastapi-code-service
+  namespace: meetup-code
+spec:
+  selector:
+    blog: my-fastapi-code
+  ports:
+  - port:  80
+    targetPort:  12345
