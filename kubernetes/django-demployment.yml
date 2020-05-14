@@ -23,9 +23,8 @@ spec:
         - containerPort: 12345
           name: my-django-port
   
------------------------
-
-apiVersion: extensions/v1beta1
+---
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: my-django-code-ingress
@@ -42,11 +41,11 @@ spec:
           servicePort: 80
         path: /django
 
------------------------
+---
 kind: Service
 apiVersion: v1
 metadata:
-  name:  my-django-code-service
+  name:  my-django-code-service1
   namespace: meetup-code
 spec:
   selector:
