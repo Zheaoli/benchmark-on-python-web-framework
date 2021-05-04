@@ -9,7 +9,7 @@ greenify.greenify()
 monkey.patch_all()
 
 
-loglevel = "debug"
+# loglevel = "debug"
 
 bind = "0.0.0.0:12345"
 
