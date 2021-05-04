@@ -14,23 +14,17 @@ I have already prepared some environments for this benchmark. All of those envir
 
 2. The Kubernetes Ingress Controller made by Nginx 1.7.10 is used to be the load balancer. Every pod for the server gets the same weight.
 
-3. MySQL service is used at the database. The version is 8.0 and the server gets 2 cores CPU and 8G RAM with a single node.
+3. MySQL service is used at the database. The version is 8.0 and the server gets 8 cores CPU and 16G RAM with a single node.
 
 ### Test Tools
 
-I choice the JMeter as the test tool. 
+I choice the JMeter as the test tool, the influxDB as time database, grafana to analysis the result
 
-1. a Master Pod to schedule the test task
+Here's the Detail
 
-2. two slave Pod to run the test task
+1. 3 x 8C16G VM to run JMeter Server to send the request to server. Here's 1000 threads on each server
 
-3. use Inluxdb as the data collector
-
-4. use the Grafana as the dashboard
-
-Here's the architecture
-
-![image](https://user-images.githubusercontent.com/7054676/81506493-4479da00-9329-11ea-9a94-fafaeda26698.png)
+2. use 1 x 8C16G to run the influxdb server.
 
 ### Test Method
 
@@ -69,13 +63,12 @@ I have already made some different config for Django/Flask/FastAPI
 
 #### Django
 
-![image](https://user-images.githubusercontent.com/7054676/81506736-14333b00-932b-11ea-8a18-67ef92857593.png)
+![image](https://user-images.githubusercontent.com/7054676/117008718-97f4ed00-ad1d-11eb-9ffa-9091a62713d3.png)
 
 #### Flask
 
-![image](https://user-images.githubusercontent.com/7054676/81506749-2319ed80-932b-11ea-87cc-9a2a9fd3ea1b.png)
+![image](https://user-images.githubusercontent.com/7054676/117008814-b2c76180-ad1d-11eb-841f-79e17a277813.png)
 
 #### FastAPI
 
-![image](https://user-images.githubusercontent.com/7054676/81506763-3cbb3500-932b-11ea-83c6-239faae6f1fa.png)
-
+![image](https://user-images.githubusercontent.com/7054676/117008767-a6430900-ad1d-11eb-9b5d-244f261411ee.png)
