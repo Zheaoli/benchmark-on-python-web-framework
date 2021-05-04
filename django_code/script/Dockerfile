@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.9
 COPY . /django-code
 RUN cd /django-code && pip install -r requirements.txt
 WORKDIR /django-code

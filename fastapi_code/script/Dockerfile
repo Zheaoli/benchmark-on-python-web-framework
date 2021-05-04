@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.9
 COPY . /fastapi-code
 RUN cd /fastapi-code && pip install -r requirements.txt
 WORKDIR /fastapi-code
