@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: my-fastapi-code
-        image: meetupdemo.azurecr.io/fastapi_code:latest2
+        image: meetupdemo.azurecr.io/benchmark:fastapi-vnet
         ports:
         - containerPort: 12345
           name: my-fastapi-port

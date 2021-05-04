@@ -7,7 +7,7 @@ metadata:
     type: my-django-code
     app: my-django-code
 spec:
-  replicas: 3
+  replicas: 0
   selector: 
     matchLabels:
      blog: my-django-code
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: my-django-code
-        image: meetupdemo.azurecr.io/django_code:latest
+        image: meetupdemo.azurecr.io/benchmark:django-vnet1
         ports:
         - containerPort: 12345
           name: my-django-port
