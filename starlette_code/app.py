@@ -4,9 +4,10 @@ from typing import List
 
 import databases
 import pymysql
+import json
 import sqlalchemy
 from starlette.applications import Starlette
-from starlette.responses import PlainTextResponse, JSONResponse
+from starlette.responses import Response
 from starlette.routing import Route
 from pydantic import BaseModel
 
@@ -40,7 +41,7 @@ class DemoData(BaseModel):
 init = False
 
 
-async def demo_code():
+async def demo_code(request):
     global init
     if not init:
         await database.connect()
@@ -50,7 +51,7 @@ async def demo_code():
         demo_data.c.name == "".join(random.choices(TEMP, k=random.randrange(1, 254)))
     )
     data = await database.fetch_all(query)
-    return JSONResponse(content=data)
+    return Response(content=json.dumps(data, default=str), status_code=200, media_type="application/json")
 
 routes = [
     Route("/demo", demo_code, methods=["GET"]),

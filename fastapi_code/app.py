@@ -5,7 +5,9 @@ from typing import List
 import databases
 import pymysql
 import sqlalchemy
+import json
 from fastapi import FastAPI
+from fastapi.responses import Response
 from pydantic import BaseModel
 
 pymysql.install_as_MySQLdb()
@@ -50,4 +52,6 @@ async def demo_code():
     query = demo_data.select().where(
         demo_data.c.name == "".join(random.choices(TEMP, k=random.randrange(1, 254)))
     )
-    return await database.fetch_all(query)
+    data = await database.fetch_all(query)
+    response = json.dumps(data, default=str)
+    return Response(content=response, status_code=200, media_type="application/json")
