@@ -5,7 +5,9 @@ from typing import List
 import databases
 import pymysql
 import sqlalchemy
-from fastapi import FastAPI
+from starlette.applications import Starlette
+from starlette.responses import PlainTextResponse, JSONResponse
+from starlette.routing import Route
 from pydantic import BaseModel
 
 pymysql.install_as_MySQLdb()
@@ -35,12 +37,9 @@ class DemoData(BaseModel):
     name: str
 
 
-app = FastAPI()
-
 init = False
 
 
-@app.get("/demo", response_model=List[DemoData])
 async def demo_code():
     global init
     if not init:
@@ -50,4 +49,11 @@ async def demo_code():
     query = demo_data.select().where(
         demo_data.c.name == "".join(random.choices(TEMP, k=random.randrange(1, 254)))
     )
-    return await database.fetch_all(query)
+    data = await database.fetch_all(query)
+    return JSONResponse(content=data)
+
+routes = [
+    Route("/demo", demo_code, methods=["GET"]),
+]
+
+app = Starlette(debug=False, routes=routes)

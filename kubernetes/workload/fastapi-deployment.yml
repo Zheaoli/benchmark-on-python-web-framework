@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-fastapi-code
+  labels:
+    type: my-fastapi-code
+    app: my-fastapi-code
+spec:
+  selector: 
+    matchLabels:
+     blog: my-fastapi-code
+  template:
+    metadata:
+      labels:
+        blog: my-fastapi-code
+    spec:
+      nodeSelector:
+        "workload": "workload"
+      tolerations:
+      - key: "workload"
+        operator: "Equal"
+        value: "workload"
+        effect: "NoSchedule"
+      containers:
+      - name: my-fastapi-code
+        image: meetupdemo.azurecr.io/fastapi-demo:demo4
+        ports:
+        - containerPort: 12345
+          name: my-fastapi-port
+        resources:
+          requests:
+            memory: "18Gi"
+            cpu: "6"
+          limits:
+            memory: "18Gi"
+            cpu: "6"
+        env:
+        - name: DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: server-secret
+              key: user
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: server-secret
+              key: password
+        - name: DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: server-secret
+              key: host
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  my-fastapi-code-service
+spec:
+  selector:
+    blog: my-fastapi-code
+  ports:
+  - port:  80
+    targetPort:  12345

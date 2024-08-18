@@ -1,12 +1,14 @@
 import json
 import random
 
+import os
 import dataset
 from flask import Flask, Response
 
 app = Flask(__name__)
 
-db = dataset.connect()
+DATABASE_URL = f"mysql://{os.getenv('DATABASE_USER')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}:3306/demo"
+db = dataset.connect(DATABASE_URL, engine_kwargs={"pool_size": 10000})
 
 TEMP = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+=-"
 

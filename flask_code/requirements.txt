@@ -5,3 +5,4 @@ mysqlclient
 gevent
 gunicorn
 dataset
+uvloop

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: framework-benchmark-file
+data:
+  main.py: |
+    import requests
+    import os    
+    from locust import HttpUser, task, between
+    import random
+    
+    
+    class WebsiteUser(HttpUser):
+        host = ""
+    
+        @task(2)
+        def test(self):
+            self.client.get("/demo")

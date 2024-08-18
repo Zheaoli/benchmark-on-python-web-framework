@@ -1,0 +1,14 @@
+---
+# Source: locust/templates/configmap-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: framework-benchmark-config
+data:
+  docker-entrypoint.sh: |
+    #!/bin/sh
+
+    set -eu
+    pip install requests 
+
+    exec /opt/venv/bin/locust $@

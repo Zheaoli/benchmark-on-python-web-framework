@@ -1,0 +1,33 @@
+---
+# Source: locust/templates/master-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: framework-benchmark
+  labels:
+    helm.sh/chart: locust-0.31.6
+    app.kubernetes.io/name: locust
+    app.kubernetes.io/instance: framework-benchmark
+    load_test: fuse-test
+    app.kubernetes.io/version: "2.15.1"
+    app.kubernetes.io/managed-by: Helm
+    component: "master"
+spec:
+  type: ClusterIP
+  ports:
+  - name: master-p1
+    port: 5557
+    protocol: TCP
+    targetPort: 5557
+  - name: master-p2
+    port: 5558
+    protocol: TCP
+    targetPort: 5558
+  - name: master-p3
+    port: 80
+    protocol: TCP
+    targetPort: 8089
+  selector:
+    component: master
+    app.kubernetes.io/name: locust
+    app.kubernetes.io/instance: framework-benchmark

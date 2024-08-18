@@ -5,13 +5,11 @@ description = ""
 authors = ["Manjusaka <me@manjusaka.me>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-django = "^3.0.6"
-greenify = "^0.3.2"
-pymysql = "^0.9.3"
-mysqlclient = "^1.4.6"
-gevent = "^20.5.0"
-docke = "^20.0.4"
+python = ">3.8"
+django = ">3.0.6"
+greenify = ">0.3.2"
+mysqlclient = ">1.4.6"
+gevent = ">20.5.0"
 
 [tool.poetry.dev-dependencies]
 

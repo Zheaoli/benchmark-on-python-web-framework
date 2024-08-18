@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-flask-code
+  labels:
+    type: my-flask-code
+    app: my-flask-code
+spec:
+  selector: 
+    matchLabels:
+     blog: my-flask-code
+  template:
+    metadata:
+      labels:
+        blog: my-flask-code
+    spec:
+      nodeSelector:
+        "workload": "workload"
+      tolerations:
+      - key: "workload"
+        operator: "Equal"
+        value: "workload"
+        effect: "NoSchedule"
+      containers:
+      - name: my-flask-code
+        image: meetupdemo.azurecr.io/flask-demo:demo1
+        ports:
+        - containerPort: 12345
+          name: my-flask-port
+        resources:
+          requests:
+            memory: "18Gi"
+            cpu: "6"
+          limits:
+            memory: "18Gi"
+            cpu: "6"
+        env:
+        - name: DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: server-secret
+              key: user
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: server-secret
+              key: password
+        - name: DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: server-secret
+              key: host
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  my-flask-code-service
+spec:
+  selector:
+    blog: my-flask-code
+  ports:
+  - port:  80
+    targetPort:  12345

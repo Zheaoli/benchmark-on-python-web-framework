@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: framework-benchmark
+    app.kubernetes.io/name: locust
+    component: master
+  name: framework-benchmark-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: framework-benchmark
+      app.kubernetes.io/name: locust
+      component: master
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: framework-benchmark
+        app.kubernetes.io/name: locust
+        component: master
+    spec:
+      containers:
+      - args:
+        - --master
+        command:
+        - sh
+        - /config/docker-entrypoint.sh
+        env:
+        - name: LOCUST_LOGLEVEL
+          value: INFO
+        - name: LOCUST_LOCUSTFILE
+          value: /mnt/locust/main.py
+        image: locustio/locust:2.15.1
+        imagePullPolicy: IfNotPresent
+        name: locust
+        ports:
+        - containerPort: 8089
+          name: loc-master-web
+          protocol: TCP
+        - containerPort: 5557
+          name: loc-master-p1
+          protocol: TCP
+        - containerPort: 5558
+          name: loc-master-p2
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: /
+            port: 8089
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 30
+        volumeMounts:
+        - mountPath: /mnt/locust
+          name: locustfile
+        - mountPath: /config
+          name: config
+      restartPolicy: Always
+      volumes:
+      - configMap:
+          name: framework-benchmark-file
+        name: locustfile
+      - configMap:
+          name: framework-benchmark-config
+        name: config

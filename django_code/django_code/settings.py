@@ -73,6 +73,12 @@ WSGI_APPLICATION = "django_code.wsgi.application"
 
 DATABASES = {
     "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "demo",
+        "USER": f"{os.getenv('DATABASE_USER')}",
+        "PASSWORD": f"{os.getenv('DATABASE_PASSWORD')}",
+        "HOST": f"{os.getenv('DATABASE_HOST')}",
+        "PORT": "3306",
     }
 }
 
@@ -83,9 +89,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 # Internationalization

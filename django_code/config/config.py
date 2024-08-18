@@ -13,7 +13,7 @@ monkey.patch_all()
 
 bind = "0.0.0.0:12345"
 
-workers = multiprocessing.cpu_count() * 2 - 1
+workers = 11
 
 worker_class = "gevent"
 
