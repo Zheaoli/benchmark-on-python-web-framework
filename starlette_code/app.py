@@ -42,16 +42,15 @@ init = False
 
 
 async def demo_code(request):
-    global init
-    if not init:
-        await database.connect()
-        init = True
-
-    query = demo_data.select().where(
-        demo_data.c.name == "".join(random.choices(TEMP, k=random.randrange(1, 254)))
+    return Response(
+        content=json.dumps(
+            {"data": "".join(random.choices(TEMP, k=random.randrange(1, 254)))},
+            default=str,
+        ),
+        status_code=200,
+        media_type="application/json",
     )
-    data = await database.fetch_all(query)
-    return Response(content=json.dumps(data, default=str), status_code=200, media_type="application/json")
+
 
 routes = [
     Route("/demo", demo_code, methods=["GET"]),

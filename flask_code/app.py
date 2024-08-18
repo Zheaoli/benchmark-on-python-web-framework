@@ -17,12 +17,8 @@ TEMP = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()
 def demo_code():
     return Response(
         response=json.dumps(
-            list(
-                db.query(
-                    f"select * from demo_data where name='{''.join(random.choices(TEMP, k=random.randrange(1, 254)))}'"
-                )
-            ),
-            default=str
+            {"data": "".join(random.choices(TEMP, k=random.randrange(1, 254)))},
+            default=str,
         ),
         status=200,
         content_type="application/json",

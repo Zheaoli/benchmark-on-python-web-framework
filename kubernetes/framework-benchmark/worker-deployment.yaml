@@ -21,8 +21,6 @@ spec:
         app.kubernetes.io/name: locust
         component: worker
     spec:
-      nodeSelector:
-        "benchmark": "benchmark"
       tolerations:
       - key: "benchmark"
         operator: "Equal"

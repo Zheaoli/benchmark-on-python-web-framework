@@ -23,7 +23,7 @@ spec:
         effect: "NoSchedule"
       containers:
       - name: my-starlette-code
-        image: meetupdemo.azurecr.io/starlette-demo:demo5
+        image: meetupdemo.azurecr.io/starlette-demo:no-io1
         ports:
         - containerPort: 12345
           name: my-port

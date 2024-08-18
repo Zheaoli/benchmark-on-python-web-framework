@@ -23,7 +23,7 @@ spec:
         effect: "NoSchedule"
       containers:
       - name: my-flask-code
-        image: meetupdemo.azurecr.io/flask-demo:demo4
+        image: meetupdemo.azurecr.io/flask-demo:no-io-1
         ports:
         - containerPort: 12345
           name: my-flask-port

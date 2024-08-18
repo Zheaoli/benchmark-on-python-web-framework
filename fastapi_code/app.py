@@ -48,10 +48,7 @@ async def demo_code():
     if not init:
         await database.connect()
         init = True
-
-    query = demo_data.select().where(
-        demo_data.c.name == "".join(random.choices(TEMP, k=random.randrange(1, 254)))
+    response = json.dumps(
+        {"data": "".join(random.choices(TEMP, k=random.randrange(1, 254)))}, default=str
     )
-    data = await database.fetch_all(query)
-    response = json.dumps(data, default=str)
     return Response(content=response, status_code=200, media_type="application/json")
