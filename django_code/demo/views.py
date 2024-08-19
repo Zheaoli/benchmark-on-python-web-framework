@@ -10,12 +10,8 @@ TEMP = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()
 
 # Create your views here.
 def demo_views(request):
-    demo=random.choices(TEMP, k=random.randrange(1, 254))
-    DemoData.objects.create(
-        name="".join(demo)
-    )
     result = DemoData.objects.filter(
-        name="".join(demo)
+        name="".join(random.choices(TEMP, k=random.randrange(1, 254)))
     )
     # x = json.dumps(request.body)
     return HttpResponse(
